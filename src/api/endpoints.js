@@ -51,3 +51,25 @@ export async function searchSellers(query) {
     return { sellers: [], products: [] };
   }
 }
+
+/**
+ * Sign up (for when backend exists). Placeholder – replace with real API.
+ * @param {import('../types/auth.js').SignupForm} body
+ * @returns {Promise<{ ok: boolean }>}
+ */
+export async function signup(body) {
+  // TODO: api.post('auth/signup', body);
+  await new Promise((r) => setTimeout(r, 2000));
+  return { ok: true };
+}
+
+/**
+ * Log in (for when backend exists). Placeholder – replace with real API.
+ * @param {{ email: string, password: string }} body
+ * @returns {Promise<{ ok: boolean }>}
+ */
+export async function login(body) {
+  // TODO: api.post('auth/login', body);
+  await new Promise((r) => setTimeout(r, 2000));
+  return { ok: true };
+}

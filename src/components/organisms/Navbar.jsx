@@ -2,8 +2,8 @@
  * Top nav – logo, links, currency, login/signup.
  */
 
+import { Link } from 'react-router-dom';
 import { Logo } from '../atoms/Logo.jsx';
-import { Button } from '../atoms/Button.jsx';
 import { NAV_LINKS } from '../../constants/hero.js';
 
 export function Navbar() {
@@ -19,8 +19,12 @@ export function Navbar() {
       </div>
       <div className="nav-actions">
         <div className="currency-toggle">🌍 NGN / USD</div>
-        <Button variant="login">Log In</Button>
-        <Button variant="signup">Sign Up Free</Button>
+        <Link to="/login" className="btn-login">
+          Log In
+        </Link>
+        <Link to="/signup" className="btn-signup">
+          Sign Up Free
+        </Link>
       </div>
     </nav>
   );

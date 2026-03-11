@@ -9,3 +9,5 @@ export { HowItWorksSection } from './HowItWorksSection.jsx';
 export { TestimonialsSection } from './TestimonialsSection.jsx';
 export { NewsletterSection } from './NewsletterSection.jsx';
 export { Footer } from './Footer.jsx';
+export { LoginPage } from './LoginPage.jsx';
+export { SignupPage } from './SignupPage.jsx';
