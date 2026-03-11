@@ -6,7 +6,7 @@ import { Logo } from '../atoms/Logo.jsx';
 import { Button } from '../atoms/Button.jsx';
 import { NAV_LINKS } from '../../constants/hero.js';
 
-export function Navbar({ loaded }) {
+export function Navbar() {
   return (
     <nav className="navbar">
       <Logo />

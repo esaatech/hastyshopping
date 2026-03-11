@@ -4,3 +4,8 @@ export { HeroContentLeft } from './HeroContentLeft.jsx';
 export { HeroContentRight } from './HeroContentRight.jsx';
 export { StatsBar } from './StatsBar.jsx';
 export { Hero } from './Hero.jsx';
+export { FeaturedSection } from './FeaturedSection.jsx';
+export { HowItWorksSection } from './HowItWorksSection.jsx';
+export { TestimonialsSection } from './TestimonialsSection.jsx';
+export { NewsletterSection } from './NewsletterSection.jsx';
+export { Footer } from './Footer.jsx';

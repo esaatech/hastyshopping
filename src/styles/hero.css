@@ -15,9 +15,22 @@
   position: relative;
   min-height: 100vh;
   background: var(--dark);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
+}
+
+.hero-section {
+  width: 100%;
+}
+
+/* Background layer – clips orbs/particles so overflow doesn't block page scroll */
+.hero-bg-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Background */

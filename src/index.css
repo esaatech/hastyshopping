@@ -4,10 +4,21 @@
   padding: 0;
 }
 
+html {
+  height: auto;
+  min-height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100%;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,5 +26,14 @@ body {
 }
 
 #root {
-  min-height: 100vh;
+  min-height: 100%;
+  overflow: visible;
+}
+
+.page {
+  display: block;
+  overflow: visible;
+  min-height: 100%;
+  /* Ensure content can extend and scroll (hero + featured + more) */
+  position: relative;
 }

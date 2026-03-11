@@ -9,7 +9,6 @@ import { HeroContentLeft } from './HeroContentLeft.jsx';
 import { HeroContentRight } from './HeroContentRight.jsx';
 import { StatsBar } from './StatsBar.jsx';
 import { searchSellers } from '../../api/endpoints.js';
-import '../../styles/hero.css';
 
 export function Hero() {
   const {
@@ -27,10 +26,12 @@ export function Hero() {
   };
 
   return (
-    <div style={{ fontFamily: "'Syne', 'DM Sans', sans-serif" }} className="w-full">
+    <section style={{ fontFamily: "'Syne', 'DM Sans', sans-serif" }} className="hero-section" aria-label="Hero">
       <div className={`hero-wrapper ${loaded ? 'loaded' : ''}`.trim()}>
-        <HeroBackground particles={particles} loaded={loaded} />
-        <Navbar loaded={loaded} />
+        <div className="hero-bg-layer">
+          <HeroBackground particles={particles} loaded={loaded} />
+        </div>
+        <Navbar />
         <div className="hero-content">
           <HeroContentLeft
             loaded={loaded}
@@ -44,6 +45,6 @@ export function Hero() {
         </div>
         <StatsBar loaded={loaded} />
       </div>
-    </div>
+    </section>
   );
 }

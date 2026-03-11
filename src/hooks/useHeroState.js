@@ -26,11 +26,14 @@ export function useHeroState() {
   const [particles, setParticles] = useState([]);
 
   useEffect(() => {
-    setLoaded(true);
     const id = setInterval(() => {
       setActiveCategory((prev) => (prev + 1) % CATEGORIES.length);
     }, CATEGORY_ROTATE_MS);
-    return () => clearInterval(id);
+    const t = setTimeout(() => setLoaded(true), 0);
+    return () => {
+      clearInterval(id);
+      clearTimeout(t);
+    };
   }, []);
 
   useEffect(() => {
@@ -43,7 +46,8 @@ export function useHeroState() {
       duration: Math.random() * 8 + 6,
       delay: Math.random() * 4,
     }));
-    setParticles(list);
+    const t = setTimeout(() => setParticles(list), 0);
+    return () => clearTimeout(t);
   }, []);
 
   const setCategory = useCallback((index) => {

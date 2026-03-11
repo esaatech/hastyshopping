@@ -1,0 +1,96 @@
+/* Featured section – second section below hero. Seller card + mini stats use hero.css. */
+
+.featured-section {
+  --green: #0a7c3e;
+  --green-light: #12a355;
+  --green-bright: #16c462;
+  --gold: #f5a623;
+  --gold-light: #ffc84a;
+  --dark: #0d1a12;
+
+  background: var(--dark);
+  padding: 64px 48px 80px;
+  position: relative;
+}
+
+.featured-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featured-header {
+  margin-bottom: 40px;
+}
+
+.featured-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.5px;
+  margin: 0 0 8px 0;
+}
+
+.featured-subtitle {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+  max-width: 520px;
+  line-height: 1.5;
+}
+
+.featured-content {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.featured-card-wrap {
+  flex: 0 0 auto;
+  width: 380px;
+  max-width: 100%;
+}
+
+.featured-card-wrap .seller-card {
+  width: 100%;
+}
+
+.featured-mini-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  flex: 1;
+  min-width: 280px;
+  align-content: start;
+}
+
+.featured-footer {
+  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(22, 196, 98, 0.15);
+}
+
+.featured-cta {
+  font-family: 'Syne', sans-serif;
+}
+
+@media (max-width: 900px) {
+  .featured-section {
+    padding: 48px 24px 64px;
+  }
+
+  .featured-content {
+    flex-direction: column;
+  }
+
+  .featured-card-wrap {
+    width: 100%;
+  }
+
+  .featured-mini-stats {
+    width: 100%;
+    min-width: 0;
+  }
+}
