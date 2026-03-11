@@ -97,6 +97,16 @@
   transform: translateY(-2px);
 }
 
+.social-btn-icon {
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.social-btn:hover .social-btn-icon {
+  color: rgba(255, 255, 255, 0.95);
+}
+
 .footer-links {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

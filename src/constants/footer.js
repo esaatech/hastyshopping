@@ -22,11 +22,11 @@ export const FOOTER_LINKS = [
 ];
 
 export const SOCIALS = [
-  { icon: '📘', label: 'Facebook' },
-  { icon: '📸', label: 'Instagram' },
-  { icon: '🐦', label: 'Twitter/X' },
-  { icon: '💼', label: 'LinkedIn' },
-  { icon: '💬', label: 'WhatsApp' },
+  { type: 'facebook', label: 'Facebook' },
+  { type: 'instagram', label: 'Instagram' },
+  { type: 'twitter', label: 'Twitter/X' },
+  { type: 'linkedin', label: 'LinkedIn' },
+  { type: 'whatsapp', label: 'WhatsApp' },
 ];
 
 export const FOOTER_CATEGORIES = [

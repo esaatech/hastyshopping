@@ -10,7 +10,16 @@ import {
   TRUST_BADGES,
   FOOTER_BOTTOM_LINKS,
 } from '../../constants/footer.js';
+import { FaFacebookF, FaInstagram, FaXTwitter, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa6';
 import '../../styles/footer.css';
+
+const SOCIAL_ICONS = {
+  facebook: FaFacebookF,
+  instagram: FaInstagram,
+  twitter: FaXTwitter,
+  linkedin: FaLinkedinIn,
+  whatsapp: FaWhatsapp,
+};
 
 export function Footer() {
   const { loaded } = useFooterState();
@@ -33,11 +42,14 @@ export function Footer() {
             <span>Canada</span>
           </div>
           <nav className="footer-socials" aria-label="Social links">
-            {SOCIALS.map((s) => (
-              <a key={s.label} className="social-btn" href="#" title={s.label} aria-label={s.label}>
-                {s.icon}
-              </a>
-            ))}
+            {SOCIALS.map((s) => {
+              const Icon = SOCIAL_ICONS[s.type];
+              return (
+                <a key={s.type} className="social-btn" href="#" title={s.label} aria-label={s.label}>
+                  {Icon ? <Icon className="social-btn-icon" aria-hidden /> : null}
+                </a>
+              );
+            })}
           </nav>
         </div>
 
