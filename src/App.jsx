@@ -7,6 +7,8 @@ import { NewsletterSection } from './components/organisms/NewsletterSection.jsx'
 import { Footer } from './components/organisms/Footer.jsx'
 import { LoginPage } from './components/organisms/LoginPage.jsx'
 import { SignupPage } from './components/organisms/SignupPage.jsx'
+import { SellerLoginPage } from './components/organisms/SellerLoginPage.jsx'
+import { SellerSignupPage } from './components/organisms/SellerSignupPage.jsx'
 import './styles/hero.css'
 
 function HomePage() {
@@ -31,6 +33,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/seller/login" element={<SellerLoginPage />} />
+        <Route path="/seller/signup" element={<SellerSignupPage />} />
       </Routes>
     </BrowserRouter>
   )

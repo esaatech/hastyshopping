@@ -73,3 +73,25 @@ export async function login(body) {
   await new Promise((r) => setTimeout(r, 2000));
   return { ok: true };
 }
+
+/**
+ * Seller login. Placeholder – replace with real API.
+ * @param {{ email: string, password: string }} body
+ * @returns {Promise<{ ok: boolean }>}
+ */
+export async function sellerLogin(body) {
+  // TODO: api.post('seller/auth/login', body);
+  await new Promise((r) => setTimeout(r, 2000));
+  return { ok: true };
+}
+
+/**
+ * Seller signup/apply. Placeholder – replace with real API.
+ * @param {import('../types/seller.js').SellerSignupForm} body
+ * @returns {Promise<{ ok: boolean }>}
+ */
+export async function sellerSignup(body) {
+  // TODO: api.post('seller/auth/signup', body);
+  await new Promise((r) => setTimeout(r, 2200));
+  return { ok: true };
+}

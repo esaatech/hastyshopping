@@ -1,0 +1,487 @@
+/* Seller login – split layout, orange accent */
+
+.sl-page {
+  min-height: 100vh;
+  background: #0d1208;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+.sl-left {
+  background: linear-gradient(160deg, #12180a 0%, #0d1208 100%);
+  border-right: 1px solid rgba(245, 166, 35, 0.12);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.sl-left.vis {
+  opacity: 1;
+}
+
+.sl-glow-1 {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(circle, rgba(245, 166, 35, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.sl-glow-2 {
+  position: absolute;
+  bottom: -100px;
+  left: -60px;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, rgba(22, 196, 98, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.sl-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245, 166, 35, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 166, 35, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+.sl-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+.sl-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  color: white;
+  text-decoration: none;
+}
+.sl-logo span {
+  color: #f5a623;
+}
+.seller-badge {
+  background: rgba(245, 166, 35, 0.12);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #f5a623;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sl-left-mid {
+  position: relative;
+  z-index: 2;
+}
+.sl-headline {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(26px, 2.8vw, 40px);
+  font-weight: 800;
+  color: white;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin-bottom: 14px;
+}
+.sl-headline span {
+  background: linear-gradient(135deg, #f5a623 0%, #ffc84a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.sl-sub {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 300px;
+  margin-bottom: 28px;
+}
+
+.sl-seller-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sl-seller-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(245, 166, 35, 0.1);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: all 0.5s cubic-bezier(0.23, 0.86, 0.39, 0.96);
+}
+.sl-seller-card.vis {
+  opacity: 1;
+  transform: translateX(0);
+}
+.sl-seller-card:hover {
+  border-color: rgba(245, 166, 35, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+}
+.sl-seller-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(245, 166, 35, 0.12);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.sl-seller-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+.sl-seller-meta {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 2px;
+}
+.sl-seller-sales {
+  margin-left: auto;
+  text-align: right;
+}
+.sl-seller-amt {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #f5a623;
+}
+.sl-seller-bdg {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 2px;
+}
+
+.sl-stats-row {
+  display: flex;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+.sl-stat {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(245, 166, 35, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+.sl-stat-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: #f5a623;
+}
+.sl-stat-lbl {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 3px;
+}
+
+.sl-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 44px;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.8s cubic-bezier(0.23, 0.86, 0.39, 0.96) 0.2s;
+}
+.sl-right.vis {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sl-form-wrap {
+  width: 100%;
+  max-width: 400px;
+}
+
+.sl-page .role-tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 32px;
+  gap: 4px;
+}
+.sl-page .role-tab {
+  flex: 1;
+  padding: 9px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Syne', sans-serif;
+  transition: all 0.25s;
+  border: none;
+  color: rgba(255, 255, 255, 0.35);
+  background: transparent;
+  text-decoration: none;
+}
+.sl-page .role-tab.active-buyer {
+  background: rgba(22, 196, 98, 0.15);
+  color: #16c462;
+  border: 1px solid rgba(22, 196, 98, 0.25);
+}
+.sl-page .role-tab.active-seller {
+  background: rgba(245, 166, 35, 0.15);
+  color: #f5a623;
+  border: 1px solid rgba(245, 166, 35, 0.25);
+}
+
+.sl-page .form-header {
+  margin-bottom: 28px;
+}
+.sl-page .form-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+.sl-page .form-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 300;
+  line-height: 1.6;
+}
+.sl-page .form-sub a {
+  color: #f5a623;
+  font-weight: 600;
+  text-decoration: none;
+}
+.sl-page .form-sub a:hover {
+  color: #ffc84a;
+}
+
+.sl-page .field {
+  margin-bottom: 14px;
+}
+.sl-page .field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 6px;
+  font-family: 'Syne', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.sl-page .field-wrap,
+.sl-page .field-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 0 14px;
+  transition: all 0.3s;
+}
+.sl-page .field-wrap:focus-within,
+.sl-page .field-input-wrap:focus-within {
+  border-color: #f5a623;
+  background: rgba(245, 166, 35, 0.05);
+  box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.08);
+}
+.sl-page .field-icon {
+  font-size: 15px;
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+.sl-page .field-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 14px;
+  padding: 13px 0;
+  font-family: 'DM Sans', sans-serif;
+  width: 100%;
+}
+.sl-page .field-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+.sl-page .toggle-pw {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 15px;
+  transition: color 0.2s;
+  padding: 0;
+}
+.sl-page .toggle-pw:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sl-page .forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 18px;
+}
+.sl-page .forgot-link {
+  font-size: 13px;
+  color: #f5a623;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.sl-page .forgot-link:hover {
+  color: #ffc84a;
+}
+
+.sl-page .error-msg {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #fca5a5;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sl-page .submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #c97f10 0%, #f5a623 50%, #ffc84a 100%);
+  border: none;
+  color: #0d1208;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  letter-spacing: 0.3px;
+  transition: all 0.25s;
+  box-shadow: 0 4px 20px rgba(245, 166, 35, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.sl-page .submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(245, 166, 35, 0.45);
+}
+.sl-page .submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.sl-page .spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(13, 18, 8, 0.3);
+  border-top-color: #0d1208;
+  animation: sl-spin 0.7s linear infinite;
+}
+@keyframes sl-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.new-seller-cta {
+  background: rgba(245, 166, 35, 0.06);
+  border: 1px dashed rgba(245, 166, 35, 0.2);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-decoration: none;
+  color: inherit;
+}
+.new-seller-cta:hover {
+  background: rgba(245, 166, 35, 0.1);
+  border-color: rgba(245, 166, 35, 0.35);
+}
+.cta-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(245, 166, 35, 0.15);
+  border: 1px solid rgba(245, 166, 35, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.cta-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+.cta-sub {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 2px;
+}
+.cta-arrow {
+  margin-left: auto;
+  color: #f5a623;
+  font-size: 16px;
+}
+
+.sl-page .terms {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.2);
+  text-align: center;
+  margin-top: 16px;
+  line-height: 1.6;
+}
+.sl-page .terms a {
+  color: rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+}
+
+@media (max-width: 860px) {
+  .sl-page {
+    grid-template-columns: 1fr;
+  }
+  .sl-left {
+    display: none;
+  }
+  .sl-right {
+    padding: 32px 20px;
+  }
+}

@@ -11,3 +11,5 @@ export { NewsletterSection } from './NewsletterSection.jsx';
 export { Footer } from './Footer.jsx';
 export { LoginPage } from './LoginPage.jsx';
 export { SignupPage } from './SignupPage.jsx';
+export { SellerLoginPage } from './SellerLoginPage.jsx';
+export { SellerSignupPage } from './SellerSignupPage.jsx';

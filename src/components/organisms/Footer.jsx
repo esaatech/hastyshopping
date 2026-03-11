@@ -1,7 +1,9 @@
 /**
  * Footer – brand, link columns, categories strip, trust badges, bottom bar.
+ * Seller Dashboard → /seller/login, Become a Seller → /seller/signup.
  */
 
+import { Link } from 'react-router-dom';
 import { useFooterState } from '../../hooks/useFooterState.js';
 import {
   FOOTER_LINKS,
@@ -57,11 +59,29 @@ export function Footer() {
           {FOOTER_LINKS.map((col) => (
             <div key={col.heading}>
               <div className="footer-col-title">{col.heading}</div>
-              {col.links.map((link) => (
-                <a key={link} className="footer-link" href="#">
-                  {link}
-                </a>
-              ))}
+              {col.links.map((link) => {
+                const sellerDashboard = link === 'Seller Dashboard';
+                const becomeASeller = link === 'Become a Seller';
+                if (sellerDashboard) {
+                  return (
+                    <Link key={link} className="footer-link" to="/seller/login">
+                      {link}
+                    </Link>
+                  );
+                }
+                if (becomeASeller) {
+                  return (
+                    <Link key={link} className="footer-link" to="/seller/signup">
+                      {link}
+                    </Link>
+                  );
+                }
+                return (
+                  <a key={link} className="footer-link" href="#">
+                    {link}
+                  </a>
+                );
+              })}
             </div>
           ))}
         </div>
