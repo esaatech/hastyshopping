@@ -10,14 +10,52 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   setPersistence,
+  signOut,
   signInWithEmailAndPassword,
   signInWithPopup,
   updateProfile,
 } from 'firebase/auth';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { firebaseAuth, firebaseDb } from '../firebase/firebase.js';
 
 let persistenceReady = false;
+
+function setLastRole(role) {
+  try {
+    window.localStorage.setItem('hs_last_role', role);
+  } catch {
+    // ignore
+  }
+}
+
+async function getRoleForUid(uid) {
+  const snap = await getDoc(doc(firebaseDb, 'users', uid));
+  if (!snap.exists()) return null;
+  return snap.data()?.role || null;
+}
+
+async function enforceRoleForLogin({ uid, expectedRole }) {
+  const role = await getRoleForUid(uid);
+  if (!role) return;
+  if (role !== expectedRole) {
+    try {
+      window.localStorage.removeItem('hs_last_role');
+    } catch {
+      // ignore
+    }
+    try {
+      await signOut(firebaseAuth);
+    } catch {
+      // ignore
+    }
+    throw new Error(
+      expectedRole === 'buyer'
+        ? 'This account is registered as a seller. Please use Seller Login.'
+        : 'This account is registered as a buyer. Please use Buyer Login.',
+    );
+  }
+  setLastRole(role);
+}
 
 async function ensurePersistence() {
   if (persistenceReady) return;
@@ -43,6 +81,7 @@ function mapAuthError(err) {
 export async function buyerSignup(body) {
   await ensurePersistence();
   const cred = await createUserWithEmailAndPassword(firebaseAuth, body.email, body.password);
+  setLastRole('buyer');
   if (body.fullName?.trim()) {
     await updateProfile(cred.user, { displayName: body.fullName.trim() });
   }
@@ -72,6 +111,7 @@ export async function buyerSignup(body) {
 export async function buyerLogin(body) {
   await ensurePersistence();
   const cred = await signInWithEmailAndPassword(firebaseAuth, body.email, body.password);
+  await enforceRoleForLogin({ uid: cred.user.uid, expectedRole: 'buyer' });
   return { ok: true, uid: cred.user.uid };
 }
 
@@ -79,6 +119,15 @@ export async function buyerLoginWithGoogle() {
   await ensurePersistence();
   const provider = new GoogleAuthProvider();
   const cred = await signInWithPopup(firebaseAuth, provider);
+  const existingRole = await getRoleForUid(cred.user.uid);
+  if (existingRole && existingRole !== 'buyer') {
+    try {
+      await signOut(firebaseAuth);
+    } catch {
+      // ignore
+    }
+    throw new Error('This account is registered as a seller. Please use Seller Login.');
+  }
   await setDoc(
     doc(firebaseDb, 'users', cred.user.uid),
     {
@@ -90,6 +139,7 @@ export async function buyerLoginWithGoogle() {
     },
     { merge: true },
   );
+  setLastRole('buyer');
   return { ok: true, uid: cred.user.uid };
 }
 
@@ -100,6 +150,7 @@ export async function buyerLoginWithGoogle() {
 export async function sellerLoginFirebase(body) {
   await ensurePersistence();
   const cred = await signInWithEmailAndPassword(firebaseAuth, body.email, body.password);
+  await enforceRoleForLogin({ uid: cred.user.uid, expectedRole: 'seller' });
   return { ok: true, uid: cred.user.uid };
 }
 
@@ -107,6 +158,15 @@ export async function sellerLoginWithGoogle() {
   await ensurePersistence();
   const provider = new GoogleAuthProvider();
   const cred = await signInWithPopup(firebaseAuth, provider);
+  const existingRole = await getRoleForUid(cred.user.uid);
+  if (existingRole && existingRole !== 'seller') {
+    try {
+      await signOut(firebaseAuth);
+    } catch {
+      // ignore
+    }
+    throw new Error('This account is registered as a buyer. Please use Buyer Login.');
+  }
   await setDoc(
     doc(firebaseDb, 'users', cred.user.uid),
     {
@@ -118,6 +178,7 @@ export async function sellerLoginWithGoogle() {
     },
     { merge: true },
   );
+  setLastRole('seller');
   return { ok: true, uid: cred.user.uid };
 }
 
@@ -129,6 +190,7 @@ export async function sellerLoginWithGoogle() {
 export async function sellerSignupFirebase(body) {
   await ensurePersistence();
   const cred = await createUserWithEmailAndPassword(firebaseAuth, body.email, body.password);
+  setLastRole('seller');
   if (body.fullName?.trim()) {
     await updateProfile(cred.user, { displayName: body.fullName.trim() });
   }

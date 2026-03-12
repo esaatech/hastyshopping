@@ -36,7 +36,7 @@ export function useLoginState() {
     setLoading(true);
     try {
       await buyerLogin({ email, password });
-      navigate('/');
+      navigate('/buyer/dashboard');
     } catch (e) {
       setError(mapAuthError(e));
     } finally {
@@ -49,7 +49,7 @@ export function useLoginState() {
     setLoading(true);
     try {
       await buyerLoginWithGoogle();
-      navigate('/');
+      navigate('/buyer/dashboard');
     } catch (e) {
       setError(mapAuthError(e));
     } finally {

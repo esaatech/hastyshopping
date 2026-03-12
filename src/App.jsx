@@ -18,8 +18,50 @@ import {
   SellerDashboardReviews,
   SellerDashboardSettings,
 } from './components/organisms/seller-dashboard/index.js'
+import {
+  BuyerDashboardLayout,
+  BuyerDashboardHome,
+  BuyerDashboardOrders,
+  BuyerDashboardSaved,
+  BuyerDashboardReferral,
+  BuyerDashboardAddresses,
+  BuyerDashboardSettings,
+} from './components/organisms/buyer-dashboard/index.js'
 import { useAuth } from './context/AuthContext.jsx'
 import './styles/hero.css'
+
+function RequireRole({ role, children }) {
+  const { user, profile, initializing, profileLoading } = useAuth()
+  if (initializing) return <div style={{ padding: 24, color: '#fff' }}>Loading…</div>
+  if (!user) return <Navigate to="/login" replace />
+
+  const lastRole = (() => {
+    try {
+      return window.localStorage.getItem('hs_last_role')
+    } catch {
+      return null
+    }
+  })()
+
+  const effectiveRole = profile?.role || lastRole
+
+  // While profile is loading and we don't have a fallback role, show loader instead of a blank screen.
+  if (profileLoading && !effectiveRole) {
+    return <div style={{ padding: 24, color: '#fff' }}>Loading your dashboard…</div>
+  }
+
+  if (!effectiveRole) {
+    return <Navigate to="/" replace />
+  }
+
+  if (effectiveRole !== role) {
+    if (effectiveRole === 'seller') return <Navigate to="/seller/dashboard" replace />
+    if (effectiveRole === 'buyer') return <Navigate to="/buyer/dashboard" replace />
+    return <Navigate to="/" replace />
+  }
+
+  return children
+}
 
 function HomePage() {
   return (
@@ -46,18 +88,14 @@ function HomeOrDashboard() {
 }
 
 function AuthAwareLogin() {
-  const { user, profile, initializing } = useAuth()
+  const { initializing } = useAuth()
   if (initializing) return null
-  if (user && profile?.role === 'seller') return <Navigate to="/seller/dashboard" replace />
-  if (user) return <Navigate to="/" replace />
   return <LoginPage />
 }
 
 function AuthAwareSignup() {
-  const { user, profile, initializing } = useAuth()
+  const { initializing } = useAuth()
   if (initializing) return null
-  if (user && profile?.role === 'seller') return <Navigate to="/seller/dashboard" replace />
-  if (user) return <Navigate to="/" replace />
   return <SignupPage />
 }
 
@@ -84,13 +122,35 @@ function App() {
         <Route path="/signup" element={<AuthAwareSignup />} />
         <Route path="/seller/login" element={<AuthAwareSellerLogin />} />
         <Route path="/seller/signup" element={<AuthAwareSellerSignup />} />
-        <Route path="/seller/dashboard" element={<SellerDashboardLayout />}>
+        <Route
+          path="/seller/dashboard"
+          element={(
+            <RequireRole role="seller">
+              <SellerDashboardLayout />
+            </RequireRole>
+          )}
+        >
           <Route index element={<SellerDashboardOverview />} />
           <Route path="orders" element={<SellerDashboardOrders />} />
           <Route path="products" element={<SellerDashboardProducts />} />
           <Route path="earnings" element={<SellerDashboardEarnings />} />
           <Route path="reviews" element={<SellerDashboardReviews />} />
           <Route path="settings" element={<SellerDashboardSettings />} />
+        </Route>
+        <Route
+          path="/buyer/dashboard"
+          element={(
+            <RequireRole role="buyer">
+              <BuyerDashboardLayout />
+            </RequireRole>
+          )}
+        >
+          <Route index element={<BuyerDashboardHome />} />
+          <Route path="orders" element={<BuyerDashboardOrders />} />
+          <Route path="saved" element={<BuyerDashboardSaved />} />
+          <Route path="referral" element={<BuyerDashboardReferral />} />
+          <Route path="addresses" element={<BuyerDashboardAddresses />} />
+          <Route path="settings" element={<BuyerDashboardSettings />} />
         </Route>
       </Routes>
     </BrowserRouter>

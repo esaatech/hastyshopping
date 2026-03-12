@@ -10,7 +10,15 @@ import { useAuth } from '../../context/AuthContext.jsx';
 export function Navbar() {
   const navigate = useNavigate();
   const { user, profile, signOut } = useAuth();
-  const dashboardPath = profile?.role === 'seller' ? '/seller/dashboard' : '/';
+  const lastRole = (() => {
+    try {
+      return window.localStorage.getItem('hs_last_role');
+    } catch {
+      return null;
+    }
+  })();
+  const effectiveRole = profile?.role || lastRole;
+  const dashboardPath = effectiveRole === 'seller' ? '/seller/dashboard' : '/buyer/dashboard';
 
   const handleSignOut = async () => {
     await signOut();

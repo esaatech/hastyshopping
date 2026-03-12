@@ -91,7 +91,7 @@ export function useSignupState() {
     setLoading(true);
     try {
       await buyerLoginWithGoogle();
-      navigate('/');
+      navigate('/buyer/dashboard');
     } catch (e) {
       setSubmitError(mapAuthError(e));
     } finally {
