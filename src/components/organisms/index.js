@@ -13,3 +13,13 @@ export { LoginPage } from './LoginPage.jsx';
 export { SignupPage } from './SignupPage.jsx';
 export { SellerLoginPage } from './SellerLoginPage.jsx';
 export { SellerSignupPage } from './SellerSignupPage.jsx';
+export { SellerDashboard } from './SellerDashboard.jsx'
+export {
+  SellerDashboardLayout,
+  SellerDashboardOverview,
+  SellerDashboardOrders,
+  SellerDashboardProducts,
+  SellerDashboardEarnings,
+  SellerDashboardReviews,
+  SellerDashboardSettings,
+} from './seller-dashboard/index.js'
