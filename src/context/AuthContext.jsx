@@ -1,9 +1,15 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { firebaseAuth, firebaseDb } from '../firebase/firebase.js';
 
-const AuthContext = createContext({ user: null, profile: null, initializing: true });
+const AuthContext = createContext({
+  user: null,
+  profile: null,
+  initializing: true,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  signOut: async () => {},
+});
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -42,7 +48,18 @@ export function AuthProvider({ children }) {
   }, [user]);
 
   const value = useMemo(
-    () => ({ user, profile, initializing }),
+    () => ({
+      user,
+      profile,
+      initializing,
+      async signOut() {
+        try {
+          await firebaseSignOut(firebaseAuth);
+        } catch (e) {
+          console.error('[AuthContext] signOut failed', e);
+        }
+      },
+    }),
     [user, profile, initializing],
   );
 
