@@ -4,11 +4,13 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { login as loginApi } from '../api/endpoints.js';
+import { useNavigate } from 'react-router-dom';
+import { buyerLogin, buyerLoginWithGoogle, mapAuthError } from '../api/firebaseAuth.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function useLoginState() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -33,12 +35,27 @@ export function useLoginState() {
     setError('');
     setLoading(true);
     try {
-      await loginApi({ email, password });
-      // TODO: set auth state / redirect (e.g. navigate('/'))
+      await buyerLogin({ email, password });
+      navigate('/');
+    } catch (e) {
+      setError(mapAuthError(e));
     } finally {
       setLoading(false);
     }
-  }, [email, password]);
+  }, [email, password, navigate]);
+
+  const handleGoogleLogin = useCallback(async () => {
+    setError('');
+    setLoading(true);
+    try {
+      await buyerLoginWithGoogle();
+      navigate('/');
+    } catch (e) {
+      setError(mapAuthError(e));
+    } finally {
+      setLoading(false);
+    }
+  }, [navigate]);
 
   return {
     email,
@@ -51,5 +68,6 @@ export function useLoginState() {
     error,
     loaded,
     handleLogin,
+    handleGoogleLogin,
   };
 }

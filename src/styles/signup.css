@@ -491,6 +491,18 @@
   color: #a8f5c2;
 }
 
+.su-page .error-msg {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #fca5a5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .success-wrap {
   text-align: center;
   padding: 20px 0;

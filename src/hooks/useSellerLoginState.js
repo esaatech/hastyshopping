@@ -3,11 +3,13 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { sellerLogin } from '../api/endpoints.js';
+import { useNavigate } from 'react-router-dom';
+import { mapAuthError, sellerLoginFirebase, sellerLoginWithGoogle } from '../api/firebaseAuth.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function useSellerLoginState() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -32,12 +34,27 @@ export function useSellerLoginState() {
     setError('');
     setLoading(true);
     try {
-      await sellerLogin({ email, password });
-      // TODO: set seller auth state / redirect to seller dashboard
+      await sellerLoginFirebase({ email, password });
+      navigate('/seller/dashboard');
+    } catch (e) {
+      setError(mapAuthError(e));
     } finally {
       setLoading(false);
     }
-  }, [email, password]);
+  }, [email, password, navigate]);
+
+  const handleGoogleLogin = useCallback(async () => {
+    setError('');
+    setLoading(true);
+    try {
+      await sellerLoginWithGoogle();
+      navigate('/seller/dashboard');
+    } catch (e) {
+      setError(mapAuthError(e));
+    } finally {
+      setLoading(false);
+    }
+  }, [navigate]);
 
   return {
     email,
@@ -50,5 +67,6 @@ export function useSellerLoginState() {
     error,
     loaded,
     handleLogin,
+    handleGoogleLogin,
   };
 }

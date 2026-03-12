@@ -27,6 +27,7 @@ export function SellerSignupPage() {
     update,
     toggleCat,
     errors,
+    submitError,
     nextStep,
     goBack,
     steps,
@@ -89,7 +90,7 @@ export function SellerSignupPage() {
               </p>
               <div className="success-note">📧 Confirmation sent to {form.email}</div>
               <br />
-              <Link to="/seller/login" className="btn-dashboard">
+              <Link to="/seller/dashboard" className="btn-dashboard">
                 Go to Seller Dashboard →
               </Link>
             </div>
@@ -343,6 +344,12 @@ export function SellerSignupPage() {
                   Already have a seller account? <Link to="/seller/login">Sign in →</Link>
                 </div>
               )}
+
+              {submitError ? (
+                <div className="field-error" role="alert" style={{ marginTop: 14 }}>
+                  ⚠️ {submitError}
+                </div>
+              ) : null}
             </>
           )}
         </div>

@@ -3,7 +3,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { sellerSignup } from '../api/endpoints.js';
+import { mapAuthError, sellerSignupFirebase } from '../api/firebaseAuth.js';
 import { SELLER_SIGNUP_STEPS } from '../constants/sellerSignup.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -28,6 +28,7 @@ export function useSellerSignupState() {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState('');
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 100);
@@ -89,9 +90,13 @@ export function useSellerSignupState() {
     if (!ok) return;
     if (step === SELLER_SIGNUP_STEPS.length - 1) {
       setLoading(true);
+      setSubmitError('');
       try {
-        await sellerSignup(form);
+        await sellerSignupFirebase(form);
         setDone(true);
+      } catch (e) {
+        console.error('[Seller signup]', e);
+        setSubmitError(e?.message || mapAuthError(e));
       } finally {
         setLoading(false);
       }
@@ -117,6 +122,7 @@ export function useSellerSignupState() {
     update,
     toggleCat,
     errors,
+    submitError,
     nextStep,
     goBack,
     steps: SELLER_SIGNUP_STEPS,

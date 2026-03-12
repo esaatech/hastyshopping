@@ -4,7 +4,8 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { signup as signupApi } from '../api/endpoints.js';
+import { useNavigate } from 'react-router-dom';
+import { buyerSignup, buyerLoginWithGoogle, mapAuthError } from '../api/firebaseAuth.js';
 import { SIGNUP_STEPS } from '../constants/signup.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,6 +21,7 @@ const initialForm = {
 };
 
 export function useSignupState() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +29,7 @@ export function useSignupState() {
   const [done, setDone] = useState(false);
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState('');
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 100);
@@ -68,9 +71,12 @@ export function useSignupState() {
     if (step === 1 && !validateStep1()) return;
     if (step === 2) {
       setLoading(true);
+      setSubmitError('');
       try {
-        await signupApi(form);
+        await buyerSignup(form);
         setDone(true);
+      } catch (e) {
+        setSubmitError(mapAuthError(e));
       } finally {
         setLoading(false);
       }
@@ -79,6 +85,19 @@ export function useSignupState() {
     setErrors({});
     setStep((s) => s + 1);
   }, [step, form, validateStep0, validateStep1]);
+
+  const handleGoogleSignup = useCallback(async () => {
+    setSubmitError('');
+    setLoading(true);
+    try {
+      await buyerLoginWithGoogle();
+      navigate('/');
+    } catch (e) {
+      setSubmitError(mapAuthError(e));
+    } finally {
+      setLoading(false);
+    }
+  }, [navigate]);
 
   const goBack = useCallback(() => {
     setErrors({});
@@ -96,8 +115,10 @@ export function useSignupState() {
     update,
     toggleCat,
     errors,
+    submitError,
     nextStep,
     goBack,
     steps: SIGNUP_STEPS,
+    handleGoogleSignup,
   };
 }
